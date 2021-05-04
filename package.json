@@ -1,0 +1,41 @@
+{
+  "name": "create-security-txt",
+  "version": "0.0.1",
+  "description": "Create a security.txt file.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dreamseer/create-security-txt.git"
+  },
+  "funding": {
+    "type": "kofi",
+    "url": "https://ko-fi.com/dreamseer"
+  },
+  "author": {
+    "name": "Marc Görtz",
+    "email": "git@marcgoertz.de",
+    "url": "https://marcgoertz.de/"
+  },
+  "bin": {
+    "create-security-txt": "cli.js"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "format": "xo --fix",
+    "test": "xo"
+  },
+  "dependencies": {
+    "date-fns": "^2.21.1",
+    "meow": "^9.0.0"
+  },
+  "devDependencies": {
+    "pre-commit": "^1.2.2",
+    "xo": "^0.39.1"
+  },
+  "pre-commit": [
+    "format",
+    "test"
+  ]
+}
