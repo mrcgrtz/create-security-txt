@@ -2,10 +2,9 @@
 
 'use strict';
 
-const meow = require('meow');
-const formatRFC7231 = require('date-fns/formatRFC7231');
-const add = require('date-fns/add');
-const flags = require('./flags.json');
+import meow from 'meow';
+import {add, formatRFC7231} from 'date-fns';
+import flags from './flags.js';
 
 const cli = meow(`
     Usage: create-security-txt -c URL -e DAYS [OPTIONS...]
@@ -43,7 +42,10 @@ const cli = meow(`
         create-security-txt -c security@example.com -e 30
       Write a GPG signed file to the .well-known directory:
         create-security-txt -c itsec@example.org -e 7 | gpg --clearsign > .well-known/security.txt
-`, {flags});
+`, {
+	importMeta: import.meta,
+	flags
+});
 
 const flagLabels = {};
 for (const [key, {label}] of Object.entries(flags)) {
