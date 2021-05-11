@@ -26,15 +26,21 @@
   },
   "scripts": {
     "format": "xo --fix",
-    "test": "xo"
+    "test": "xo && c8 ava",
+    "coveralls": "c8 report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
     "date-fns": "^2.21.2",
     "meow": "^10.0.0"
   },
   "devDependencies": {
+    "ava": "^3.15.0",
+    "c8": "^7.7.2",
+    "coveralls": "^3.1.0",
+    "execa": "^5.0.0",
     "pre-commit": "^1.2.2",
-    "xo": "^0.39.1"
+    "sinon": "^10.0.0",
+    "xo": "^0.40.0"
   },
   "pre-commit": [
     "format",

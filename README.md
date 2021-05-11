@@ -4,6 +4,8 @@
 
 ![Update Status](https://img.shields.io/david/dreamseer/create-security-txt)
 ![Update Status](https://img.shields.io/david/dev/dreamseer/create-security-txt.svg)
+[![Build Status](https://travis-ci.org/Dreamseer/create-security-txt.svg?branch=main)](https://travis-ci.org/Dreamseer/create-security-txt)
+[![Coverage Status](https://coveralls.io/repos/github/Dreamseer/create-security-txt/badge.svg?branch=main)](https://coveralls.io/github/Dreamseer/create-security-txt?branch=main)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 [![MIT license](https://img.shields.io/github/license/dreamseer/create-security-txt.svg)](https://github.com/Dreamseer/create-security-txt/blob/main/LICENSE.md)
 

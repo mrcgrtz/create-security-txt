@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
-
 import meow from 'meow';
 import {add, formatRFC7231} from 'date-fns';
 import flags from './flags.js';
@@ -47,42 +45,46 @@ const cli = meow(`
 	flags
 });
 
-const flagLabels = {};
-for (const [key, {label}] of Object.entries(flags)) {
-	flagLabels[key] = label;
-}
+if (cli.flags.contact.length === 0 || !cli.flags.expires) {
+	cli.showHelp();
+} else {
+	const flagLabels = {};
+	for (const [key, {label}] of Object.entries(flags)) {
+		flagLabels[key] = label;
+	}
 
-const securitytxt = Object.entries(cli.flags).flatMap(([flag, values]) => {
-	switch (flag) {
-		case 'contact': {
-			return values.map(value => {
-				// Fix email address URLs
-				if (value.includes('@') && value.startsWith('mailto:') === false) {
-					return `${flagLabels[flag]}: mailto:${value}`;
-				}
+	const securitytxt = Object.entries(cli.flags).flatMap(([flag, values]) => {
+		switch (flag) {
+			case 'contact': {
+				return values.map(value => {
+					// Fix email address URLs
+					if (value.includes('@') && value.startsWith('mailto:') === false) {
+						return `${flagLabels[flag]}: mailto:${value}`;
+					}
 
-				return `${flagLabels[flag]}: ${value}`;
-			});
-		}
-
-		case 'expires': {
-			const now = new Date();
-			const expires = add(now, {days: values});
-			return `${flagLabels[flag]}: ${formatRFC7231(expires)}`;
-		}
-
-		case 'lang': {
-			if (Array.isArray(values) && values.length > 0) {
-				return `${flagLabels[flag]}: ${values.join(', ')}`;
+					return `${flagLabels[flag]}: ${value}`;
+				});
 			}
 
-			return null;
-		}
+			case 'expires': {
+				const now = new Date();
+				const expires = add(now, {days: values});
+				return `${flagLabels[flag]}: ${formatRFC7231(expires)}`;
+			}
 
-		default: {
-			return values.map(value => `${flagLabels[flag]}: ${value}`);
-		}
-	}
-}).filter(Boolean).join('\n');
+			case 'lang': {
+				if (Array.isArray(values) && values.length > 0) {
+					return `${flagLabels[flag]}: ${values.join(', ')}`;
+				}
 
-console.log(securitytxt);
+				return null;
+			}
+
+			default: {
+				return values.map(value => `${flagLabels[flag]}: ${value}`);
+			}
+		}
+	}).filter(Boolean).join('\n');
+
+	console.log(securitytxt);
+}

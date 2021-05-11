@@ -3,14 +3,12 @@ const flags = {
 		label: 'Contact',
 		type: 'string',
 		alias: 'c',
-		isMultiple: true,
-		isRequired: true
+		isMultiple: true
 	},
 	expires: {
 		label: 'Expires',
 		type: 'number',
-		alias: 'e',
-		isRequired: true
+		alias: 'e'
 	},
 	lang: {
 		label: 'Preferred-Languages',

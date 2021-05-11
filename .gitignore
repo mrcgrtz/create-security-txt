@@ -1,6 +1,7 @@
-/node_modules
-/.vscode
-
-.DS_Store
-
+node_modules
+npm-error.log
 npm-debug.log*
+.nyc_output
+.vscode
+coverage
+.DS_Store
