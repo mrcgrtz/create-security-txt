@@ -2,6 +2,13 @@
   "name": "create-security-txt",
   "version": "0.0.2",
   "description": "Create a security.txt file.",
+  "keywords": [
+    "cli",
+    "nodejs",
+    "security",
+    "security-tools",
+    "security-txt"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
