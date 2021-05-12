@@ -30,7 +30,7 @@
     "coveralls": "c8 report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "date-fns": "^2.21.2",
+    "date-fns": "^2.21.3",
     "meow": "^10.0.0"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "execa": "^5.0.0",
     "pre-commit": "^1.2.2",
     "sinon": "^10.0.0",
-    "xo": "^0.40.0"
+    "xo": "^0.40.1"
   },
   "pre-commit": [
     "format",
