@@ -42,7 +42,7 @@ const cli = meow(`
         create-security-txt -c itsec@example.org -e 7 | gpg --clearsign > .well-known/security.txt
 `, {
 	importMeta: import.meta,
-	flags
+	flags,
 });
 
 if (cli.flags.contact.length === 0 || !cli.flags.expires) {

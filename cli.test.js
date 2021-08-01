@@ -7,7 +7,7 @@ let clock;
 test.beforeEach(() => {
 	clock = sinon.useFakeTimers({
 		shouldAdvanceTime: true,
-		now: new Date(2019, 1, 1, 0, 0)
+		now: new Date(2019, 1, 1, 0, 0),
 	});
 });
 
@@ -22,14 +22,14 @@ test('Input without "contact" or "expires" flags shows help', async t => {
 
 test('Input with "contact", but without "expires" flags shows help', async t => {
 	const {exitCode} = await t.throwsAsync(() => execa('./cli.js', [
-		'-c itsec@acme.org'
+		'-c itsec@acme.org',
 	]));
 	t.is(exitCode, 2);
 });
 
 test('Input with "expires", but without "contact" flags shows help', async t => {
 	const {exitCode} = await t.throwsAsync(() => execa('./cli.js', [
-		'-e 7'
+		'-e 7',
 	]));
 	t.is(exitCode, 2);
 });
@@ -37,7 +37,7 @@ test('Input with "expires", but without "contact" flags shows help', async t => 
 test('Input with minimal flags', async t => {
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
-		'--expires=6'
+		'--expires=6',
 	]);
 	t.regex(stdout, /Contact:\smailto:itsec@acme.org\n/);
 	t.regex(stdout, /Expires:\s(.+)/);
@@ -52,7 +52,7 @@ test('Input with all flags', async t => {
 		'--encryption=https://acme.org/key.asc',
 		'--ack=https://acme.org/security/acknowledgments.txt',
 		'--policy=https://acme.org/security/policy.txt',
-		'--hiring=https://acme.org/jobs'
+		'--hiring=https://acme.org/jobs',
 	]);
 	t.regex(stdout, /Contact:\smailto:itsec@acme.org\n/);
 	t.regex(stdout, /Expires:\s(.+)\n/);
@@ -68,7 +68,7 @@ test('Input with more than one contact point', async t => {
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
 		'--contact=https://acme.org/contact',
-		'--expires=6'
+		'--expires=6',
 	]);
 	t.regex(stdout, /Contact:\smailto:itsec@acme.org\n/);
 	t.regex(stdout, /Contact:\shttps:\/\/acme\.org\/contact\n/);
@@ -80,7 +80,7 @@ test('Input with more than one preferred language', async t => {
 		'--contact=itsec@acme.org',
 		'--expires=6',
 		'--lang=en',
-		'--lang=fi'
+		'--lang=fi',
 	]);
 	t.regex(stdout, /Contact:\smailto:itsec@acme.org\n/);
 	t.regex(stdout, /Expires:\s(.+)\n/);
