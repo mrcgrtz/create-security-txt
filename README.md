@@ -2,8 +2,6 @@
 
 > Create a [security.txt](https://securitytxt.org/) file.
 
-![Update Status](https://img.shields.io/david/dreamseer/create-security-txt)
-![Update Status](https://img.shields.io/david/dev/dreamseer/create-security-txt.svg)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dreamseer/create-security-txt/Test%20and%20create%20coverage%20report/main)
 [![Coverage Status](https://coveralls.io/repos/github/Dreamseer/create-security-txt/badge.svg?branch=main)](https://coveralls.io/github/Dreamseer/create-security-txt?branch=main)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
