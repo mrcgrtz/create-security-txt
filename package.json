@@ -29,7 +29,7 @@
     "create-security-txt": "cli.js"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "scripts": {
     "format": "xo --fix",
