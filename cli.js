@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 import meow from 'meow';
-import {add, formatRFC7231} from 'date-fns';
+import addDays from 'date-fns/addDays/index.js';
+import formatRFC7231 from 'date-fns/formatRFC7231/index.js';
 import flags from './flags.js';
 
 const cli = meow(`
@@ -68,7 +69,7 @@ if (cli.flags.contact.length === 0 || !cli.flags.expires) {
 
 			case 'expires': {
 				const now = new Date();
-				const expires = add(now, {days: values});
+				const expires = addDays(now, values);
 				return `${flagLabels[flag]}: ${formatRFC7231(expires)}`;
 			}
 
