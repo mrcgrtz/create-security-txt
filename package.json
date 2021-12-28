@@ -10,10 +10,7 @@
     "security-txt"
   ],
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Dreamseer/create-security-txt.git"
-  },
+  "repository": "github:mrcgrtz/create-security-txt",
   "funding": {
     "type": "kofi",
     "url": "https://ko-fi.com/mrcgrtz"

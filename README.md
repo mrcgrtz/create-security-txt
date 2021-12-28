@@ -2,10 +2,10 @@
 
 > Create a [security.txt](https://securitytxt.org/) file.
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dreamseer/create-security-txt/Test%20and%20create%20coverage%20report/main)
-[![Coverage Status](https://coveralls.io/repos/github/Dreamseer/create-security-txt/badge.svg?branch=main)](https://coveralls.io/github/Dreamseer/create-security-txt?branch=main)
+[![Test and create coverage report](https://github.com/mrcgrtz/create-security-txt/actions/workflows/test-and-coverage.yml/badge.svg)](https://github.com/mrcgrtz/create-security-txt/actions/workflows/test-and-coverage.yml)
+[![Coverage Status](https://coveralls.io/repos/github/mrcgrtz/create-security-txt/badge.svg?branch=main)](https://coveralls.io/github/mrcgrtz/create-security-txt?branch=main)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
-[![MIT license](https://img.shields.io/github/license/dreamseer/create-security-txt.svg)](https://github.com/Dreamseer/create-security-txt/blob/main/LICENSE.md)
+[![MIT license](https://img.shields.io/github/license/mrcgrtz/create-security-txt.svg)](https://github.com/mrcgrtz/create-security-txt/blob/main/LICENSE.md)
 
 ## Usage
 
