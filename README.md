@@ -2,9 +2,9 @@
 
 > Create a [security.txt](https://securitytxt.org/) file.
 
-[![Test and create coverage report](https://github.com/mrcgrtz/create-security-txt/actions/workflows/test-and-coverage.yml/badge.svg)](https://github.com/mrcgrtz/create-security-txt/actions/workflows/test-and-coverage.yml)
+[![Test](https://github.com/mrcgrtz/create-security-txt/actions/workflows/test.yml/badge.svg)](https://github.com/mrcgrtz/create-security-txt/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mrcgrtz/create-security-txt/badge.svg?branch=main)](https://coveralls.io/github/mrcgrtz/create-security-txt?branch=main)
-[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 [![MIT license](https://img.shields.io/github/license/mrcgrtz/create-security-txt.svg)](https://github.com/mrcgrtz/create-security-txt/blob/main/LICENSE.md)
 
 ## Usage

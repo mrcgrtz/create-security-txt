@@ -1,4 +1,4 @@
-name: Test and create coverage report
+name: Test
 
 on:
   push:
@@ -8,10 +8,13 @@ on:
 
 jobs:
   test:
+
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node-version: [16.x,17.x]
+        node-version: [lts/*, 17.x]
+
     steps:
     - name: Checkout
       uses: actions/checkout@v2
