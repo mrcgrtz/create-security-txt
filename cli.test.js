@@ -1,19 +1,5 @@
 import test from 'ava';
 import {execa} from 'execa';
-import sinon from 'sinon';
-
-let clock;
-
-test.beforeEach(() => {
-	clock = sinon.useFakeTimers({
-		shouldAdvanceTime: true,
-		now: new Date(2019, 1, 1, 0, 0),
-	});
-});
-
-test.afterEach(() => {
-	clock.restore();
-});
 
 test('Input without "contact" or "expires" flags shows help', async t => {
 	const {exitCode} = await t.throwsAsync(() => execa('./cli.js'));
