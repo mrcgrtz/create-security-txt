@@ -12,7 +12,7 @@
 ```bash
 $ npx create-security-txt --help
 
-  Create Create an RFC 9116 compliant security.txt file.
+  Create an RFC 9116 compliant security.txt file.
 
   Usage: create-security-txt -c URL -e DAYS [OPTIONS...]
 
