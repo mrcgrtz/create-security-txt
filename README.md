@@ -1,6 +1,6 @@
 # create-security-txt
 
-> Create a [security.txt](https://securitytxt.org/) file.
+> Create an RFC 9116 compliant [security.txt](https://www.rfc-editor.org/rfc/rfc9116) file.
 
 [![Test](https://github.com/mrcgrtz/create-security-txt/actions/workflows/test.yml/badge.svg)](https://github.com/mrcgrtz/create-security-txt/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mrcgrtz/create-security-txt/badge.svg?branch=main)](https://coveralls.io/github/mrcgrtz/create-security-txt?branch=main)
@@ -12,7 +12,7 @@
 ```bash
 $ npx create-security-txt --help
 
-  Create a security.txt file.
+  Create Create an RFC 9116 compliant security.txt file.
 
   Usage: create-security-txt -c URL -e DAYS [OPTIONS...]
 

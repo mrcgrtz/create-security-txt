@@ -1,13 +1,14 @@
 {
   "name": "create-security-txt",
   "version": "0.0.3",
-  "description": "Create a security.txt file.",
+  "description": "Create Create an RFC 9116 compliant security.txt file.",
   "keywords": [
     "cli",
     "nodejs",
     "security",
     "security-tools",
-    "security-txt"
+    "security-txt",
+    "rfc-9116"
   ],
   "license": "MIT",
   "repository": "github:mrcgrtz/create-security-txt",
