@@ -21,11 +21,10 @@ $ npx create-security-txt --help
                       contact you about security issues. 
                       Remember to include "https://" for URLs,
                       and "mailto:" for e-mails.
-    --expires, -e     Expiration in days from now when the
-                      content of the security.txt file should
-                      be considered stale (so security
-                      researchers should then not trust
-                      it).
+    --expires, -e     Expiration in days from now or an ISO date
+                      string when the content of the security.txt file
+                      should be considered stale (so security
+                      researchers should then not trust it).
     --lang, -l        A language code that your security team
                       speaks.
     --canonical, -u   The URLs for accessing your security.txt

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import meow from 'meow';
-import {addDays, formatRFC7231} from 'date-fns';
+import {parseISO, addDays, formatRFC7231} from 'date-fns';
 import flags from './flags.js';
 
 const cli = meow(`
@@ -11,10 +11,10 @@ const cli = meow(`
       --contact, -c     A link or e-mail address for people to contact
                         you about security issues. Remember to include
                         "https://" for URLs, and "mailto:" for e-mails.
-      --expires, -e     Expiration in days from now when the content of
-                        the security.txt file should be considered stale
-                        (so security researchers should then not trust
-                        it).
+      --expires, -e     Expiration in days from now or an ISO date
+                        string when the content of the security.txt file
+                        should be considered stale (so security
+                        researchers should then not trust it).
       --lang, -l        A language code that your security team speaks.
       --canonical, -u   The URLs for accessing your security.txt file.
                         It is important to include this if you are
@@ -67,9 +67,14 @@ if (cli.flags.contact.length === 0 || !cli.flags.expires) {
 			}
 
 			case 'expires': {
-				const now = new Date();
-				const expires = addDays(now, values);
-				return `${flagLabels[flag]}: ${formatRFC7231(expires)}`;
+				try {
+					const now = new Date();
+					const expires = typeof values === 'number' ? addDays(now, values) : parseISO(values);
+					return `${flagLabels[flag]}: ${formatRFC7231(expires)}`;
+				} catch {
+					cli.showHelp();
+					return null;
+				}
 			}
 
 			case 'lang': {
