@@ -72,3 +72,28 @@ test('Input with more than one preferred language', async t => {
 	t.regex(stdout, /Expires:\s(.+)\n/);
 	t.regex(stdout, /Preferred-Languages:\sen,\sfi/);
 });
+
+test('Input with "expires" as a numeric value', async t => {
+	const {stdout} = await execa('./cli.js', [
+		'--contact=itsec@acme.org',
+		'--expires=6',
+	]);
+	t.regex(stdout, /Expires:\s(.+)/);
+});
+
+test('Input with "expires" as an ISO date', async t => {
+	const date = '2080-08-01T15:00:00Z';
+	const {stdout} = await execa('./cli.js', [
+		'--contact=itsec@acme.org',
+		`--expires=${date}`,
+	]);
+	t.regex(stdout, /Expires:\s(\w+)/);
+});
+
+test('Input with an unparseable "expires" value shows help', async t => {
+	const {exitCode} = await t.throwsAsync(() => execa('./cli.js', [
+		'-c itsec@acme.org',
+		'-e FAIL',
+	]));
+	t.is(exitCode, 2);
+});
