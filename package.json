@@ -30,8 +30,9 @@
     "node": ">=16"
   },
   "scripts": {
-    "test": "xo && c8 ava",
-    "coverage": "c8 report --reporter=lcov"
+    "coverage": "c8 report --reporter=lcov",
+    "prepare": "husky",
+    "test": "xo && c8 ava"
   },
   "dependencies": {
     "date-fns": "^3.0.6",
@@ -41,7 +42,7 @@
     "ava": "^6.0.1",
     "c8": "^9.1.0",
     "execa": "^8.0.1",
-    "husky": "^8.0.1",
+    "husky": "^9.0.11",
     "lint-staged": "^15.0.2",
     "xo": "^0.57.0"
   },
