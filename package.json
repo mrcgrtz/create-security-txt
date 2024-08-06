@@ -27,7 +27,7 @@
     "create-security-txt": "cli.js"
   },
   "engines": {
-    "node": ">=16"
+    "node": "^16.17 || ^18.7 || >=20"
   },
   "scripts": {
     "coverage": "c8 report --reporter=lcov",
@@ -43,7 +43,7 @@
     "execa": "^9.1.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.0.2",
-    "xo": "^0.58.0"
+    "xo": "^0.59.3"
   },
   "lint-staged": {
     "*.js": "xo --fix"
