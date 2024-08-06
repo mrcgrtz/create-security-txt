@@ -27,7 +27,7 @@
     "create-security-txt": "cli.js"
   },
   "engines": {
-    "node": ">=16"
+    "node": "^16.17 || ^18.7 || >=20"
   },
   "scripts": {
     "coverage": "c8 report --reporter=lcov",
