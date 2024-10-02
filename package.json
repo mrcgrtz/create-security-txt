@@ -35,7 +35,7 @@
     "test": "xo && c8 node --test"
   },
   "dependencies": {
-    "date-fns": "^3.0.6",
+    "date-fns": "^4.1.0",
     "meow": "^13.0.0"
   },
   "devDependencies": {
