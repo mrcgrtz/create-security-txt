@@ -38,7 +38,7 @@ test('Input with "expires", but without "contact" flags shows help', async () =>
 	assert.strictEqual(code, 2);
 });
 
-test('Input with minimal flags', async () => {
+test('Minimal flags are handled correctly', async () => {
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
 		'--expires=6',
@@ -47,7 +47,7 @@ test('Input with minimal flags', async () => {
 	assert.match(stdout, /Expires:\s(.+)/);
 });
 
-test('Input with all flags', async () => {
+test('All flags are handled correctly', async () => {
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
 		'--expires=6',
@@ -74,7 +74,7 @@ test('Input with all flags', async () => {
 	assert.match(stdout, /Hiring:\shttps:\/\/acme\.org\/jobs/);
 });
 
-test('Input with more than one contact point', async () => {
+test('More than one contact point is handled correctly', async () => {
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
 		'--contact=https://acme.org/contact',
@@ -85,7 +85,31 @@ test('Input with more than one contact point', async () => {
 	assert.match(stdout, /Expires:\s(.+)/);
 });
 
-test('Input with more than one preferred language', async () => {
+test('Email address without `mailto:` scheme gets prefixed automatically', async () => {
+	const {stdout} = await execa('./cli.js', [
+		'--contact=itsec@acme.org',
+		'--expires=6',
+	]);
+	assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
+});
+
+test('Email address with explicit `mailto:` scheme remains intact', async () => {
+	const {stdout} = await execa('./cli.js', [
+		'--contact=mailto:itsec@acme.org',
+		'--expires=6',
+	]);
+	assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
+});
+
+test('URL contact point is handled correctly', async () => {
+	const {stdout} = await execa('./cli.js', [
+		'--contact=https://acme.org/contact',
+		'--expires=6',
+	]);
+	assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/);
+});
+
+test('More than one preferred language is handled correctly', async () => {
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
 		'--expires=6',
@@ -97,7 +121,15 @@ test('Input with more than one preferred language', async () => {
 	assert.match(stdout, /Preferred-Languages:\sen,\sfi/);
 });
 
-test('Input with "expires" as a numeric value', async () => {
+test('Empty languages array does not output `Preferred-Languages` field', async () => {
+	const {stdout} = await execa('./cli.js', [
+		'--contact=itsec@acme.org',
+		'--expires=6',
+	]);
+	assert.doesNotMatch(stdout, /Preferred-Languages:/);
+});
+
+test('Expires date as a numeric value is handled correctly', async () => {
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
 		'--expires=6',
@@ -105,7 +137,7 @@ test('Input with "expires" as a numeric value', async () => {
 	assert.match(stdout, /Expires:\s(.+)/);
 });
 
-test('Input with "expires" as an ISO date', async () => {
+test('Expires date as an ISO date is handled correctly', async () => {
 	const date = '2080-08-01T15:00:00Z';
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
@@ -114,7 +146,16 @@ test('Input with "expires" as an ISO date', async () => {
 	assert.match(stdout, /Expires:\s(\w+)/);
 });
 
-test('Input with an unparseable "expires" value shows help', async () => {
+test('Expires date in the past still generates valid output', async () => {
+	const pastDate = '2020-01-01T00:00:00Z';
+	const {stdout} = await execa('./cli.js', [
+		'--contact=itsec@acme.org',
+		`--expires=${pastDate}`,
+	]);
+	assert.match(stdout, /Expires: (.+)/);
+});
+
+test('Unparseable expires date shows help', async () => {
 	let code;
 	try {
 		const {exitCode} = await execa('./cli.js', [
@@ -127,4 +168,40 @@ test('Input with an unparseable "expires" value shows help', async () => {
 	}
 
 	assert.strictEqual(code, 2);
+});
+
+test('Short flags work the same as long flags', async () => {
+	const {stdout} = await execa('./cli.js', [
+		'-c',
+		'itsec@acme.org',
+		'-e',
+		'6',
+		'-l',
+		'en',
+		'-p',
+		'https://acme.org/policy.txt',
+	]);
+	assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
+	assert.match(stdout, /Expires: (.+)\n/);
+	assert.match(stdout, /Preferred-Languages: en\n/);
+	assert.match(stdout, /Policy: https:\/\/acme\.org\/policy\.txt/);
+});
+
+test('Multiple flags of the same type are handled correctly', async () => {
+	const {stdout} = await execa('./cli.js', [
+		'-c',
+		'itsec@acme.org',
+		'-c',
+		'https://acme.org/contact',
+		'-e',
+		'6',
+		'-p',
+		'https://acme.org/policy1.txt',
+		'-p',
+		'https://acme.org/policy2.txt',
+	]);
+	assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
+	assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/);
+	assert.match(stdout, /Policy: https:\/\/acme\.org\/policy1\.txt\n/);
+	assert.match(stdout, /Policy: https:\/\/acme\.org\/policy2\.txt/);
 });
