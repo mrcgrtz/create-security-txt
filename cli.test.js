@@ -3,22 +3,39 @@ import assert from 'node:assert';
 import {execa} from 'execa';
 
 test('Input without "contact" or "expires" flags shows help', async () => {
-	const {exitCode} = await execa('./cli.js').catch(error => error);
-	assert.strictEqual(exitCode, 2);
+	let code;
+	try {
+		const {exitCode} = await execa('./cli.js');
+		code = exitCode;
+	} catch (error) {
+		return error;
+	}
+
+	assert.strictEqual(code, 2);
 });
 
 test('Input with "contact", but without "expires" flags shows help', async () => {
-	const {exitCode} = await execa('./cli.js', [
-		'-c itsec@acme.org',
-	]).catch(error => error);
-	assert.strictEqual(exitCode, 2);
+	let code;
+	try {
+		const {exitCode} = await execa('./cli.js', ['-c itsec@acme.org']);
+		code = exitCode;
+	} catch (error) {
+		return error;
+	}
+
+	assert.strictEqual(code, 2);
 });
 
 test('Input with "expires", but without "contact" flags shows help', async () => {
-	const {exitCode} = await execa('./cli.js', [
-		'-e 7',
-	]).catch(error => error);
-	assert.strictEqual(exitCode, 2);
+	let code;
+	try {
+		const {exitCode} = await execa('./cli.js', ['-e 7']);
+		code = exitCode;
+	} catch (error) {
+		return error;
+	}
+
+	assert.strictEqual(code, 2);
 });
 
 test('Input with minimal flags', async () => {
@@ -44,9 +61,15 @@ test('Input with all flags', async () => {
 	assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/);
 	assert.match(stdout, /Expires:\s(.+)\n/);
 	assert.match(stdout, /Preferred-Languages:\sen\n/);
-	assert.match(stdout, /Canonical:\shttps:\/\/acme\.org\/\.well-known\/security\.txt\n/);
+	assert.match(
+		stdout,
+		/Canonical:\shttps:\/\/acme\.org\/\.well-known\/security\.txt\n/,
+	);
 	assert.match(stdout, /Encryption:\shttps:\/\/acme\.org\/key\.asc\n/);
-	assert.match(stdout, /Acknowledgments:\shttps:\/\/acme\.org\/security\/acknowledgments\.txt\n/);
+	assert.match(
+		stdout,
+		/Acknowledgments:\shttps:\/\/acme\.org\/security\/acknowledgments\.txt\n/,
+	);
 	assert.match(stdout, /Policy:\shttps:\/\/acme\.org\/security\/policy\.txt\n/);
 	assert.match(stdout, /Hiring:\shttps:\/\/acme\.org\/jobs/);
 });
@@ -92,9 +115,16 @@ test('Input with "expires" as an ISO date', async () => {
 });
 
 test('Input with an unparseable "expires" value shows help', async () => {
-	const {exitCode} = await execa('./cli.js', [
-		'-c itsec@acme.org',
-		'-e FAIL',
-	]).catch(error => error);
-	assert.strictEqual(exitCode, 2);
+	let code;
+	try {
+		const {exitCode} = await execa('./cli.js', [
+			'-c itsec@acme.org',
+			'-e FAIL',
+		]);
+		code = exitCode;
+	} catch (error) {
+		return error;
+	}
+
+	assert.strictEqual(code, 2);
 });
