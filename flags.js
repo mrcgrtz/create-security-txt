@@ -45,6 +45,12 @@ const flags = {
 		shortFlag: 'h',
 		isMultiple: true,
 	},
+	csaf: {
+		label: 'CSAF',
+		type: 'string',
+		shortFlag: 's',
+		isMultiple: true,
+	},
 };
 
 export default flags;

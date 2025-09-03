@@ -57,6 +57,7 @@ test('All flags are handled correctly', async () => {
 		'--ack=https://acme.org/security/acknowledgments.txt',
 		'--policy=https://acme.org/security/policy.txt',
 		'--hiring=https://acme.org/jobs',
+		'--csaf=https://acme.org/csaf/provider-metadata.json',
 	]);
 	assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/);
 	assert.match(stdout, /Expires:\s(.+)\n/);
@@ -71,7 +72,8 @@ test('All flags are handled correctly', async () => {
 		/Acknowledgments:\shttps:\/\/acme\.org\/security\/acknowledgments\.txt\n/,
 	);
 	assert.match(stdout, /Policy:\shttps:\/\/acme\.org\/security\/policy\.txt\n/);
-	assert.match(stdout, /Hiring:\shttps:\/\/acme\.org\/jobs/);
+	assert.match(stdout, /Hiring:\shttps:\/\/acme\.org\/jobs\n/);
+	assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata\.json/);
 });
 
 test('More than one contact point is handled correctly', async () => {
@@ -129,6 +131,19 @@ test('Empty languages array does not output `Preferred-Languages` field', async 
 	assert.doesNotMatch(stdout, /Preferred-Languages:/);
 });
 
+test('More than one CSAF URL is handled correctly', async () => {
+	const {stdout} = await execa('./cli.js', [
+		'--contact=itsec@acme.org',
+		'--expires=6',
+		'--csaf=https://acme.org/csaf/provider-metadata-1.json',
+		'--csaf=https://acme.org/csaf/provider-metadata-2.json',
+	]);
+	assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/);
+	assert.match(stdout, /Expires:\s(.+)\n/);
+	assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata-1\.json\n/);
+	assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata-2\.json/);
+});
+
 test('Expires date as a numeric value is handled correctly', async () => {
 	const {stdout} = await execa('./cli.js', [
 		'--contact=itsec@acme.org',
@@ -180,11 +195,14 @@ test('Short flags work the same as long flags', async () => {
 		'en',
 		'-p',
 		'https://acme.org/policy.txt',
+		'-s',
+		'https://acme.org/csaf/provider-metadata.json',
 	]);
 	assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
 	assert.match(stdout, /Expires: (.+)\n/);
 	assert.match(stdout, /Preferred-Languages: en\n/);
-	assert.match(stdout, /Policy: https:\/\/acme\.org\/policy\.txt/);
+	assert.match(stdout, /Policy: https:\/\/acme\.org\/policy\.txt\n/);
+	assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata\.json/);
 });
 
 test('Multiple flags of the same type are handled correctly', async () => {
@@ -199,9 +217,15 @@ test('Multiple flags of the same type are handled correctly', async () => {
 		'https://acme.org/policy1.txt',
 		'-p',
 		'https://acme.org/policy2.txt',
+		'-s',
+		'https://acme.org/csaf/provider-metadata-1.json',
+		'-s',
+		'https://acme.org/csaf/provider-metadata-2.json',
 	]);
 	assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
 	assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/);
 	assert.match(stdout, /Policy: https:\/\/acme\.org\/policy1\.txt\n/);
-	assert.match(stdout, /Policy: https:\/\/acme\.org\/policy2\.txt/);
+	assert.match(stdout, /Policy: https:\/\/acme\.org\/policy2\.txt\n/);
+	assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata-1\.json\n/);
+	assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata-2\.json/);
 });
