@@ -34,6 +34,9 @@ const cli = meow(`
       --hiring, -h      A link to any security-related job openings in
                         your organisation. Remember to include
                         "https://".
+      --csaf, -s        A link to the provider-metadata.json of your
+                        CSAF (Common Security Advisory Framework)
+                        provider. Remember to include "https://".
 
     Examples:
       Write to stdout:
