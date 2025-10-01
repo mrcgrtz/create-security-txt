@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "date-fns": "^4.1.0",
-    "meow": "^13.2.0"
+    "meow": "^14.0.0"
   },
   "devDependencies": {
     "c8": "^10.1.3",
