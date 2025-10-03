@@ -48,7 +48,10 @@ const cli = meow(`
 	flags,
 });
 
-if (cli.flags.contact.length === 0 || !cli.flags.expires) {
+const hasContact = cli.flags.contact && (Array.isArray(cli.flags.contact) ? cli.flags.contact.length > 0 : true);
+const hasExpires = Boolean(cli.flags.expires);
+
+if (!hasContact || !hasExpires) {
 	cli.showHelp();
 } else {
 	const flagLabels = {};
@@ -59,7 +62,8 @@ if (cli.flags.contact.length === 0 || !cli.flags.expires) {
 	const securitytxt = Object.entries(cli.flags).flatMap(([flag, values]) => {
 		switch (flag) {
 			case 'contact': {
-				return values.map(value => {
+				const contactValues = Array.isArray(values) ? values : [values];
+				return contactValues.map(value => {
 					// Fix email address URLs
 					if (value.includes('@') && value.startsWith('mailto:') === false) {
 						return `${flagLabels[flag]}: mailto:${value}`;
@@ -83,15 +87,17 @@ if (cli.flags.contact.length === 0 || !cli.flags.expires) {
 			}
 
 			case 'lang': {
-				if (Array.isArray(values) && values.length > 0) {
-					return `${flagLabels[flag]}: ${values.join(', ')}`;
+				const langValues = Array.isArray(values) ? values : (values ? [values] : []);
+				if (langValues.length > 0) {
+					return `${flagLabels[flag]}: ${langValues.join(', ')}`;
 				}
 
 				return null;
 			}
 
 			default: {
-				return values.map(value => `${flagLabels[flag]}: ${value}`);
+				const defaultValues = Array.isArray(values) ? values : [values];
+				return defaultValues.map(value => `${flagLabels[flag]}: ${value}`);
 			}
 		}
 	}).filter(Boolean).join('\n');
