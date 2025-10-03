@@ -72,7 +72,9 @@ if (cli.flags.contact.length === 0 || !cli.flags.expires) {
 			case 'expires': {
 				try {
 					const now = new Date();
-					const expires = typeof values === 'number' ? addDays(now, values) : parseISO(values);
+					// Try to parse as number of days first, then as ISO date
+					const numericValue = Number.parseInt(values, 10);
+					const expires = Number.isNaN(numericValue) ? parseISO(values) : addDays(now, numericValue);
 					return `${flagLabels[flag]}: ${expires.toISOString()}`;
 				} catch {
 					cli.showHelp();
