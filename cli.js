@@ -74,16 +74,19 @@ if (!hasContact || !hasExpires) {
 			}
 
 			case 'expires': {
-				try {
-					const now = new Date();
-					// Try to parse as number of days first, then as ISO date
-					const numericValue = Number.parseInt(values, 10);
-					const expires = Number.isNaN(numericValue) ? parseISO(values) : addDays(now, numericValue);
-					return `${flagLabels[flag]}: ${expires.toISOString()}`;
-				} catch {
+				const now = new Date();
+				// Try to parse as number of days first, then as ISO date
+				const numericValue = Number(values);
+				const isNumeric = !Number.isNaN(numericValue) && Number.isInteger(numericValue) && String(numericValue) === values;
+				const expires = isNumeric ? addDays(now, numericValue) : parseISO(values);
+
+				// Check if the parsed date is valid
+				if (Number.isNaN(expires.getTime())) {
 					cli.showHelp();
-					return null;
+					return null; // Unreachable, but helps linter
 				}
+
+				return `${flagLabels[flag]}: ${expires.toISOString()}`;
 			}
 
 			case 'lang': {
