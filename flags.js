@@ -7,6 +7,7 @@ const flags = {
 	},
 	expires: {
 		label: 'Expires',
+		type: 'string',
 		shortFlag: 'e',
 	},
 	lang: {
