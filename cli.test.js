@@ -44,8 +44,8 @@ test('Basic functionality', async t => {
 			'--contact=itsec@acme.org',
 			'--expires=6',
 		]);
-		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/);
-		assert.match(stdout, /Expires:\s(.+)/);
+		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
+		assert.match(stdout, /Expires:\s(.+)/v);
 	});
 
 	await t.test('All flags are handled correctly', async () => {
@@ -60,21 +60,21 @@ test('Basic functionality', async t => {
 			'--hiring=https://acme.org/jobs',
 			'--csaf=https://acme.org/csaf/provider-metadata.json',
 		]);
-		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/);
-		assert.match(stdout, /Expires:\s(.+)\n/);
-		assert.match(stdout, /Preferred-Languages:\sen\n/);
+		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
+		assert.match(stdout, /Expires:\s(.+)\n/v);
+		assert.match(stdout, /Preferred-Languages:\sen\n/v);
 		assert.match(
 			stdout,
-			/Canonical:\shttps:\/\/acme\.org\/\.well-known\/security\.txt\n/,
+			/Canonical:\shttps:\/\/acme\.org\/\.well-known\/security\.txt\n/v,
 		);
-		assert.match(stdout, /Encryption:\shttps:\/\/acme\.org\/key\.asc\n/);
+		assert.match(stdout, /Encryption:\shttps:\/\/acme\.org\/key\.asc\n/v);
 		assert.match(
 			stdout,
-			/Acknowledgments:\shttps:\/\/acme\.org\/security\/acknowledgments\.txt\n/,
+			/Acknowledgments:\shttps:\/\/acme\.org\/security\/acknowledgments\.txt\n/v,
 		);
-		assert.match(stdout, /Policy:\shttps:\/\/acme\.org\/security\/policy\.txt\n/);
-		assert.match(stdout, /Hiring:\shttps:\/\/acme\.org\/jobs\n/);
-		assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata\.json/);
+		assert.match(stdout, /Policy:\shttps:\/\/acme\.org\/security\/policy\.txt\n/v);
+		assert.match(stdout, /Hiring:\shttps:\/\/acme\.org\/jobs\n/v);
+		assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata\.json/v);
 	});
 });
 
@@ -84,7 +84,7 @@ test('Contact handling', async t => {
 			'--contact=itsec@acme.org',
 			'--expires=6',
 		]);
-		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
+		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/v);
 	});
 
 	await t.test('Email address with explicit `mailto:` protocol remains intact', async () => {
@@ -92,7 +92,7 @@ test('Contact handling', async t => {
 			'--contact=mailto:itsec@acme.org',
 			'--expires=6',
 		]);
-		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
+		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/v);
 	});
 
 	await t.test('URL contact point is handled correctly', async () => {
@@ -100,7 +100,7 @@ test('Contact handling', async t => {
 			'--contact=https://acme.org/contact',
 			'--expires=6',
 		]);
-		assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/);
+		assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/v);
 	});
 
 	await t.test('More than one contact point is handled correctly', async () => {
@@ -109,9 +109,9 @@ test('Contact handling', async t => {
 			'--contact=https://acme.org/contact',
 			'--expires=6',
 		]);
-		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/);
-		assert.match(stdout, /Contact:\shttps:\/\/acme\.org\/contact\n/);
-		assert.match(stdout, /Expires:\s(.+)/);
+		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
+		assert.match(stdout, /Contact:\shttps:\/\/acme\.org\/contact\n/v);
+		assert.match(stdout, /Expires:\s(.+)/v);
 	});
 
 	await t.test(
@@ -121,8 +121,8 @@ test('Contact handling', async t => {
 				'--contact=mailto:security@example.com',
 				'--expires=7',
 			]);
-			assert.match(stdout, /Contact: mailto:security@example\.com\n/);
-			assert.doesNotMatch(stdout, /(?:mailto:){2}/);
+			assert.match(stdout, /Contact: mailto:security@example\.com\n/v);
+			assert.doesNotMatch(stdout, /(?:mailto:){2}/v);
 		},
 	);
 
@@ -131,7 +131,7 @@ test('Contact handling', async t => {
 			'--contact=https://acme.org/contact',
 			'--expires=7',
 		]);
-		assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/);
+		assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/v);
 	});
 });
 
@@ -143,9 +143,9 @@ test('Language handling', async t => {
 			'--lang=en',
 			'--lang=fi',
 		]);
-		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/);
-		assert.match(stdout, /Expires:\s(.+)\n/);
-		assert.match(stdout, /Preferred-Languages:\sen,\sfi/);
+		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
+		assert.match(stdout, /Expires:\s(.+)\n/v);
+		assert.match(stdout, /Preferred-Languages:\sen,\sfi/v);
 	});
 
 	await t.test('Single language is handled correctly', async () => {
@@ -154,7 +154,7 @@ test('Language handling', async t => {
 			'--expires=7',
 			'--lang=de',
 		]);
-		assert.match(stdout, /Preferred-Languages: de/);
+		assert.match(stdout, /Preferred-Languages: de/v);
 	});
 
 	await t.test('No languages does not output `Preferred-Languages` field', async () => {
@@ -162,7 +162,7 @@ test('Language handling', async t => {
 			'--contact=itsec@acme.org',
 			'--expires=6',
 		]);
-		assert.doesNotMatch(stdout, /Preferred-Languages:/);
+		assert.doesNotMatch(stdout, /Preferred-Languages:/v);
 	});
 
 	await t.test('Empty language does not output `Preferred-Languages` field', async () => {
@@ -171,7 +171,7 @@ test('Language handling', async t => {
 			'--expires=7',
 			'--lang=',
 		]);
-		assert.doesNotMatch(stdout, /Preferred-Languages:/);
+		assert.doesNotMatch(stdout, /Preferred-Languages:/v);
 	});
 });
 
@@ -181,7 +181,7 @@ test('Expires handling', async t => {
 			'--contact=itsec@acme.org',
 			'--expires=6',
 		]);
-		assert.match(stdout, /Expires:\s(.+)/);
+		assert.match(stdout, /Expires:\s(.+)/v);
 	});
 
 	await t.test('ISO date string is handled correctly', async () => {
@@ -190,7 +190,7 @@ test('Expires handling', async t => {
 			'--contact=itsec@acme.org',
 			`--expires=${date}`,
 		]);
-		assert.match(stdout, /Expires:\s(.+)/);
+		assert.match(stdout, /Expires:\s(.+)/v);
 	});
 
 	await t.test('Past date still generates valid output', async () => {
@@ -199,7 +199,7 @@ test('Expires handling', async t => {
 			'--contact=itsec@acme.org',
 			`--expires=${pastDate}`,
 		]);
-		assert.match(stdout, /Expires: (.+)/);
+		assert.match(stdout, /Expires: (.+)/v);
 	});
 
 	await t.test('Zero expires value is handled correctly', async () => {
@@ -207,8 +207,8 @@ test('Expires handling', async t => {
 			'--contact=test@example.com',
 			'--expires=0',
 		]);
-		assert.match(stdout, /Contact: mailto:test@example\.com\n/);
-		assert.match(stdout, /Expires: (.+)/);
+		assert.match(stdout, /Contact: mailto:test@example\.com\n/v);
+		assert.match(stdout, /Expires: (.+)/v);
 	});
 
 	await t.test('Negative expires value is handled correctly', async () => {
@@ -216,8 +216,8 @@ test('Expires handling', async t => {
 			'--contact=itsec@acme.org',
 			'--expires=-5',
 		]);
-		assert.match(stdout, /Contact: mailto:itsec@acme\.org\n/);
-		assert.match(stdout, /Expires: (.+)/);
+		assert.match(stdout, /Contact: mailto:itsec@acme\.org\n/v);
+		assert.match(stdout, /Expires: (.+)/v);
 	});
 
 	await t.test('Large numeric expires value is handled correctly', async () => {
@@ -225,8 +225,8 @@ test('Expires handling', async t => {
 			'--contact=itsec@acme.org',
 			'--expires=999999',
 		]);
-		assert.match(stdout, /Contact: mailto:itsec@acme\.org/);
-		assert.match(stdout, /Expires: (.+)/);
+		assert.match(stdout, /Contact: mailto:itsec@acme\.org/v);
+		assert.match(stdout, /Expires: (.+)/v);
 	});
 
 	await t.test('Unparseable expires date shows help', async () => {
@@ -255,11 +255,11 @@ test('Flag formats and multiple values', async t => {
 			'-s',
 			'https://acme.org/csaf/provider-metadata.json',
 		]);
-		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
-		assert.match(stdout, /Expires: (.+)\n/);
-		assert.match(stdout, /Preferred-Languages: en\n/);
-		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy\.txt\n/);
-		assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata\.json/);
+		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/v);
+		assert.match(stdout, /Expires: (.+)\n/v);
+		assert.match(stdout, /Preferred-Languages: en\n/v);
+		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy\.txt\n/v);
+		assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata\.json/v);
 	});
 
 	await t.test('Multiple flags of the same type are handled correctly', async () => {
@@ -279,12 +279,12 @@ test('Flag formats and multiple values', async t => {
 			'-s',
 			'https://acme.org/csaf/provider-metadata-2.json',
 		]);
-		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/);
-		assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/);
-		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy1\.txt\n/);
-		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy2\.txt\n/);
-		assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata-1\.json\n/);
-		assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata-2\.json/);
+		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/v);
+		assert.match(stdout, /Contact: https:\/\/acme\.org\/contact\n/v);
+		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy1\.txt\n/v);
+		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy2\.txt\n/v);
+		assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata-1\.json\n/v);
+		assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata-2\.json/v);
 	});
 
 	await t.test('Multiple CSAF URLs are handled correctly', async () => {
@@ -294,10 +294,10 @@ test('Flag formats and multiple values', async t => {
 			'--csaf=https://acme.org/csaf/provider-metadata-1.json',
 			'--csaf=https://acme.org/csaf/provider-metadata-2.json',
 		]);
-		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/);
-		assert.match(stdout, /Expires:\s(.+)\n/);
-		assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata-1\.json\n/);
-		assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata-2\.json/);
+		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
+		assert.match(stdout, /Expires:\s(.+)\n/v);
+		assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata-1\.json\n/v);
+		assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata-2\.json/v);
 	});
 
 	await t.test('All flag types with single values are processed correctly', async () => {
@@ -311,11 +311,11 @@ test('Flag formats and multiple values', async t => {
 			'--hiring=https://acme.org/jobs',
 		]);
 
-		assert.match(stdout, /Contact: mailto:itsec@acme\.org/);
-		assert.match(stdout, /Canonical: https:\/\/acme\.org\/\.well-known\/security\.txt/);
-		assert.match(stdout, /Encryption: https:\/\/acme\.org\/pgp\.asc/);
-		assert.match(stdout, /Acknowledgments: https:\/\/acme\.org\/thanks/);
-		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy/);
-		assert.match(stdout, /Hiring: https:\/\/acme\.org\/jobs/);
+		assert.match(stdout, /Contact: mailto:itsec@acme\.org/v);
+		assert.match(stdout, /Canonical: https:\/\/acme\.org\/\.well-known\/security\.txt/v);
+		assert.match(stdout, /Encryption: https:\/\/acme\.org\/pgp\.asc/v);
+		assert.match(stdout, /Acknowledgments: https:\/\/acme\.org\/thanks/v);
+		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy/v);
+		assert.match(stdout, /Hiring: https:\/\/acme\.org\/jobs/v);
 	});
 });
