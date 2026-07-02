@@ -26,7 +26,7 @@ If applicable, add screenshots to help explain your problem.
 
 ## Context
 
-- OS: [e.g. macOS]
-- Version [e.g. 10.15.7]
-- Node version [e.g. 17.1.0]
+- OS: (e.g. macOS)
+- Version (e.g. 10.15.7)
+- Node version (e.g. 17.1.0)
 - Add any other context about the problem here.

@@ -45,7 +45,7 @@ test('Basic functionality', async t => {
 			'--expires=6',
 		]);
 		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
-		assert.match(stdout, /Expires:\s(.+)/v);
+		assert.match(stdout, /Expires:\s.+/v);
 	});
 
 	await t.test('All flags are handled correctly', async () => {
@@ -61,7 +61,7 @@ test('Basic functionality', async t => {
 			'--csaf=https://acme.org/csaf/provider-metadata.json',
 		]);
 		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
-		assert.match(stdout, /Expires:\s(.+)\n/v);
+		assert.match(stdout, /Expires:\s.+\n/v);
 		assert.match(stdout, /Preferred-Languages:\sen\n/v);
 		assert.match(
 			stdout,
@@ -111,7 +111,7 @@ test('Contact handling', async t => {
 		]);
 		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
 		assert.match(stdout, /Contact:\shttps:\/\/acme\.org\/contact\n/v);
-		assert.match(stdout, /Expires:\s(.+)/v);
+		assert.match(stdout, /Expires:\s.+/v);
 	});
 
 	await t.test(
@@ -144,7 +144,7 @@ test('Language handling', async t => {
 			'--lang=fi',
 		]);
 		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
-		assert.match(stdout, /Expires:\s(.+)\n/v);
+		assert.match(stdout, /Expires:\s.+\n/v);
 		assert.match(stdout, /Preferred-Languages:\sen,\sfi/v);
 	});
 
@@ -181,7 +181,7 @@ test('Expires handling', async t => {
 			'--contact=itsec@acme.org',
 			'--expires=6',
 		]);
-		assert.match(stdout, /Expires:\s(.+)/v);
+		assert.match(stdout, /Expires:\s.+/v);
 	});
 
 	await t.test('ISO date string is handled correctly', async () => {
@@ -190,7 +190,7 @@ test('Expires handling', async t => {
 			'--contact=itsec@acme.org',
 			`--expires=${date}`,
 		]);
-		assert.match(stdout, /Expires:\s(.+)/v);
+		assert.match(stdout, /Expires:\s.+/v);
 	});
 
 	await t.test('Past date still generates valid output', async () => {
@@ -199,7 +199,7 @@ test('Expires handling', async t => {
 			'--contact=itsec@acme.org',
 			`--expires=${pastDate}`,
 		]);
-		assert.match(stdout, /Expires: (.+)/v);
+		assert.match(stdout, /Expires: .+/v);
 	});
 
 	await t.test('Zero expires value is handled correctly', async () => {
@@ -208,7 +208,7 @@ test('Expires handling', async t => {
 			'--expires=0',
 		]);
 		assert.match(stdout, /Contact: mailto:test@example\.com\n/v);
-		assert.match(stdout, /Expires: (.+)/v);
+		assert.match(stdout, /Expires: .+/v);
 	});
 
 	await t.test('Negative expires value is handled correctly', async () => {
@@ -217,7 +217,7 @@ test('Expires handling', async t => {
 			'--expires=-5',
 		]);
 		assert.match(stdout, /Contact: mailto:itsec@acme\.org\n/v);
-		assert.match(stdout, /Expires: (.+)/v);
+		assert.match(stdout, /Expires: .+/v);
 	});
 
 	await t.test('Large numeric expires value is handled correctly', async () => {
@@ -226,7 +226,7 @@ test('Expires handling', async t => {
 			'--expires=999999',
 		]);
 		assert.match(stdout, /Contact: mailto:itsec@acme\.org/v);
-		assert.match(stdout, /Expires: (.+)/v);
+		assert.match(stdout, /Expires: .+/v);
 	});
 
 	await t.test('Unparseable expires date shows help', async () => {
@@ -256,7 +256,7 @@ test('Flag formats and multiple values', async t => {
 			'https://acme.org/csaf/provider-metadata.json',
 		]);
 		assert.match(stdout, /Contact: mailto:itsec@acme.org\n/v);
-		assert.match(stdout, /Expires: (.+)\n/v);
+		assert.match(stdout, /Expires: .+\n/v);
 		assert.match(stdout, /Preferred-Languages: en\n/v);
 		assert.match(stdout, /Policy: https:\/\/acme\.org\/policy\.txt\n/v);
 		assert.match(stdout, /CSAF: https:\/\/acme\.org\/csaf\/provider-metadata\.json/v);
@@ -295,7 +295,7 @@ test('Flag formats and multiple values', async t => {
 			'--csaf=https://acme.org/csaf/provider-metadata-2.json',
 		]);
 		assert.match(stdout, /Contact:\smailto:itsec@acme.org\n/v);
-		assert.match(stdout, /Expires:\s(.+)\n/v);
+		assert.match(stdout, /Expires:\s.+\n/v);
 		assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata-1\.json\n/v);
 		assert.match(stdout, /CSAF:\shttps:\/\/acme\.org\/csaf\/provider-metadata-2\.json/v);
 	});
