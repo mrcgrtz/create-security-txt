@@ -77,7 +77,7 @@ if (!hasContact || !hasExpires) {
 				const now = new Date();
 				// Try to parse as number of days first, then as ISO date
 				const numericValue = Number(values);
-				const isNumeric = !Number.isNaN(numericValue) && Number.isInteger(numericValue) && String(numericValue) === values;
+				const isNumeric = !Number.isNaN(numericValue) && Number.isSafeInteger(numericValue) && String(numericValue) === values;
 				const expires = isNumeric ? addDays(now, numericValue) : parseISO(values);
 
 				// Check if the parsed date is valid
