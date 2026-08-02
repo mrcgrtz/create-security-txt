@@ -3,7 +3,7 @@ import assert from 'node:assert';
 import {execa} from 'execa';
 
 // Helper function to test help output
-async function expectHelp(args = []) {
+async function getHelpExitCode(args = []) {
 	let code;
 	try {
 		const {exitCode} = await execa('./cli.js', args);
@@ -12,29 +12,34 @@ async function expectHelp(args = []) {
 		code = error.exitCode;
 	}
 
-	assert.strictEqual(code, 2);
+	return code;
 }
 
 test('Help output for missing required flags', async t => {
 	await t.test('No flags shows help', async () => {
-		await expectHelp();
+		const code = await getHelpExitCode();
+		assert.strictEqual(code, 2);
 	});
 
 	await t.test('Missing "expires" flag shows help', async () => {
-		await expectHelp(['--contact=itsec@acme.org']);
+		const code = await getHelpExitCode(['--contact=itsec@acme.org']);
+		assert.strictEqual(code, 2);
 	});
 
 	await t.test('Missing "contact" flag shows help', async () => {
-		await expectHelp(['--expires=7']);
+		const code = await getHelpExitCode(['--expires=7']);
+		assert.strictEqual(code, 2);
 	});
 
 	await t.test('Empty "expires" value shows help', async () => {
-		await expectHelp(['--contact=itsec@acme.org', '--expires=']);
+		const code = await getHelpExitCode(['--contact=itsec@acme.org', '--expires=']);
+		assert.strictEqual(code, 2);
 	});
 
 	await t.test('Empty "contact" value shows help', async () => {
 		// Simulate empty contact array by not providing contact
-		await expectHelp(['--expires=7', '--contact=']);
+		const code = await getHelpExitCode(['--expires=7', '--contact=']);
+		assert.strictEqual(code, 2);
 	});
 });
 
@@ -230,14 +235,16 @@ test('Expires handling', async t => {
 	});
 
 	await t.test('Unparseable expires date shows help', async () => {
-		await expectHelp(['--contact=itsec@acme.org', '--expires=FAIL']);
+		const code = await getHelpExitCode(['--contact=itsec@acme.org', '--expires=FAIL']);
+		assert.strictEqual(code, 2);
 	});
 
 	await t.test('Malformed ISO date string shows help', async () => {
-		await expectHelp([
+		const code = await getHelpExitCode([
 			'--contact=itsec@acme.org',
 			'--expires=2024-13-45T25:99:99Z',
 		]);
+		assert.strictEqual(code, 2);
 	});
 });
 
