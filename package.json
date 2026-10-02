@@ -16,7 +16,7 @@
   },
   "sideEffects": false,
   "engines": {
-    "node": ">=22"
+    "node": ">=24.15"
   },
   "scripts": {
     "coverage": "c8 report --reporter=lcov",
