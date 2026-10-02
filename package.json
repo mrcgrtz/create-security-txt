@@ -2,30 +2,19 @@
   "name": "create-security-txt",
   "version": "1.2.0",
   "description": "Create an RFC 9116 compliant security.txt file.",
-  "keywords": [
-    "cli",
-    "nodejs",
-    "security",
-    "security-tools",
-    "security-txt",
-    "rfc-9116"
-  ],
   "license": "MIT",
   "repository": "github:mrcgrtz/create-security-txt",
   "funding": {
     "type": "kofi",
     "url": "https://ko-fi.com/mrcgrtz"
   },
-  "author": {
-    "name": "Marc Görtz",
-    "email": "git@marcgoertz.de",
-    "url": "https://marcgoertz.de/"
-  },
+  "author": "Marc Görtz <git@marcgoertz.de> (https://marcgoertz.de/)",
   "type": "module",
   "exports": "./cli.js",
   "bin": {
-    "create-security-txt": "cli.js"
+    "create-security-txt": "./cli.js"
   },
+  "sideEffects": false,
   "engines": {
     "node": ">=22"
   },
@@ -34,6 +23,18 @@
     "prepare": "husky",
     "test": "xo && c8 node --test"
   },
+  "files": [
+    "*.js",
+    "!*.test.js"
+  ],
+  "keywords": [
+    "cli",
+    "nodejs",
+    "security",
+    "security-tools",
+    "security-txt",
+    "rfc-9116"
+  ],
   "dependencies": {
     "date-fns": "^4.1.0",
     "meow": "^14.1.0"
@@ -44,9 +45,6 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
     "xo": "^5.0.1"
-  },
-  "overrides": {
-    "yargs": "^18.0.0"
   },
   "lint-staged": {
     "*.js": "xo --fix"
