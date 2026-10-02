@@ -63,14 +63,10 @@ if (!hasContact || !hasExpires) {
 		switch (flag) {
 			case 'contact': {
 				const contactValues = Array.isArray(values) ? values : [values];
-				return contactValues.map(value => {
+				return contactValues.map(value =>
 					// Fix email address URLs
-					if (value.includes('@') && value.startsWith('mailto:') === false) {
-						return `${flagLabels[flag]}: mailto:${value}`;
-					}
-
-					return `${flagLabels[flag]}: ${value}`;
-				});
+					value.includes('@') && value.startsWith('mailto:') === false ? `${flagLabels[flag]}: mailto:${value}` : `${flagLabels[flag]}: ${value}`,
+				);
 			}
 
 			case 'expires': {
@@ -91,11 +87,7 @@ if (!hasContact || !hasExpires) {
 
 			case 'lang': {
 				const langValues = Array.isArray(values) ? values : (values ? [values] : []);
-				if (langValues.length > 0) {
-					return `${flagLabels[flag]}: ${langValues.join(', ')}`;
-				}
-
-				return null;
+				return langValues.length > 0 ? `${flagLabels[flag]}: ${langValues.join(', ')}` : null;
 			}
 
 			default: {
